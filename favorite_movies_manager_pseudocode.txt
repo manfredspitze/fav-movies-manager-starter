@@ -1,0 +1,63 @@
+BEGIN FavoriteMoviesManager
+
+    // Initialize an empty list for favorite movies
+    SET favorite_movies = []
+
+    // Display options to the user
+    PRINT "--- Favorite Movies Manager ---"
+    PRINT "1. Display Movies"
+    PRINT "2. Add Movie"
+    PRINT "3. Remove Movie by Name"
+    PRINT "4. Remove Movie by Index"
+    PRINT "5. Exit"
+
+    // Get user choice
+    INPUT choice
+
+    // Check user choice
+    IF choice == '1' THEN
+        // Display movies
+        IF length of favorite_movies is 0 THEN
+            PRINT "Your list of favorite movies is empty."
+        ELSE
+            PRINT "Your favorite movies:"
+            PRINT favorite_movies  # Display the entire list
+        END IF
+
+    ELSE IF choice == '2' THEN
+        // Add a movie
+        INPUT movie
+        APPEND movie to favorite_movies
+        PRINT movie + " has been added to your list."
+
+    ELSE IF choice == '3' THEN
+        // Remove a movie by name
+        INPUT movie
+        TRY
+            REMOVE movie from favorite_movies
+            PRINT movie + " has been removed from your list."
+        CATCH ValueError
+            PRINT movie + " is not in your list."
+        END TRY
+
+    ELSE IF choice == '4' THEN
+        // Remove a movie by index
+        INPUT index
+        IF index is a digit THEN
+            SET index = index - 1  # Convert to 0-based index
+            TRY
+                SET removed_movie = REMOVE item at index from favorite_movies
+                PRINT removed_movie + " has been removed from your list."
+            CATCH IndexError
+                PRINT "Invalid index. Please enter a valid index."
+            END TRY
+        ELSE
+            PRINT "Please enter a valid number."
+
+    ELSE IF choice == '5' THEN
+        PRINT "Exiting the Favorite Movies Manager. Goodbye!"
+
+    ELSE
+        PRINT "Invalid choice. Please choose again."
+
+END FavoriteMoviesManager
